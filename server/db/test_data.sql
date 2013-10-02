@@ -18,4 +18,11 @@ INSERT INTO groups_users(id_user, id_group) VALUES(1,2);
 INSERT INTO groups_users(id_user, id_group) VALUES(2,1);
 INSERT INTO groups_users(id_user, id_group) VALUES(2,2);
 
+-- INSERT PREVIOUS ADDED DATA - LINKS
+
+INSERT INTO links(link, origin, timestamp, g_target, u_target) VALUES('http://simplelink.com', 1, '2013-10-10 10:20', 'programmers', NULL);
+INSERT INTO links(link, origin, timestamp, g_target, u_target) VALUES('http://google.com', 1, NOW(), 'programmers', NULL);
+INSERT INTO links(link, origin, timestamp, g_target, u_target) VALUES('http://facebok.com', 1, NOW(), 'testers', NULL);
+INSERT INTO links(link, origin, timestamp, g_target, u_target) VALUES('http://windows.is.shit.com', 1, NOW(), 'programmers', NULL);
+INSERT INTO links(link, origin, timestamp, g_target, u_target) VALUES('http://windows.is.shit.com', 1, NOW(), NULL, 3);
 
