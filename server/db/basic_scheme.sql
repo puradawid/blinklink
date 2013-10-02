@@ -8,7 +8,7 @@ CREATE TABLE links(
 	id INTEGER PRIMARY KEY AUTO_INCREMENT,
 	link VARCHAR(100),
 	origin INTEGER,
-	timestamp DATE,
+	timestamp TIMESTAMP,
 	g_target VARCHAR(100),
 	u_target INTEGER);
 
