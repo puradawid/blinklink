@@ -3,6 +3,7 @@ package pl.edu.pb.blinklink.model.beans;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import pl.edu.pb.blinklink.model.BlinkGroup;
 
 /**
@@ -21,6 +22,12 @@ public class BlinkGroupFacade extends AbstractFacade<BlinkGroup> {
 
     public BlinkGroupFacade() {
         super(BlinkGroup.class);
+    }
+    
+    public BlinkGroup getGroupByName(String name)
+    {
+        Query q = em.createQuery("SELECT grp FROM BlinkGroup grp WHERE name =  '" + name + "'");
+        return (BlinkGroup)q.getSingleResult();
     }
     
 }

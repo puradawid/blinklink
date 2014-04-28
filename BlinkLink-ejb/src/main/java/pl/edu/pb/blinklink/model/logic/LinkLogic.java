@@ -3,6 +3,7 @@ package pl.edu.pb.blinklink.model.logic;
 import java.util.Collection;
 import java.util.Date;
 import javax.ejb.Local;
+import pl.edu.pb.blinklink.model.BlinkGroup;
 import pl.edu.pb.blinklink.model.BlinkUser;
 import pl.edu.pb.blinklink.model.GroupLink;
 import pl.edu.pb.blinklink.model.Link;
@@ -41,6 +42,14 @@ public interface LinkLogic {
      * @throws PostingLinkException If posting link is wrong, throw this exception.
      */
     public void postLink(BlinkUser user, UserLink link) throws PostingLinkException;
+    
+    /**
+     * Posts group link into users.
+     * @param user User who posting link.
+     * @param link Address for link.
+     * @throws PostingLinkException If posting link is wrong, throw this exception.
+     */
+    public void postLink(BlinkUser user, GroupLink link, String group) throws PostingLinkException;
     
     /**
      * Search links with concrete values.

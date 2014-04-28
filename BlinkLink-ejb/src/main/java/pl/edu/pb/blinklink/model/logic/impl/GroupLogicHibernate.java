@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import javax.ejb.EJB;
+import javax.ejb.Local;
+import javax.ejb.Stateless;
 import pl.edu.pb.blinklink.model.BlinkGroup;
 import pl.edu.pb.blinklink.model.BlinkUser;
 import pl.edu.pb.blinklink.model.beans.BlinkGroupFacade;
@@ -18,7 +20,8 @@ import pl.edu.pb.blinklink.model.logic.exceptions.UserUnregisteredException;
  * 
  * @author dawid
  */
-@EJB
+@Stateless(name = "GroupLogicHibernate")
+@Local(GroupLogic.class)
 public class GroupLogicHibernate implements GroupLogic {
 
     @EJB
@@ -60,7 +63,7 @@ public class GroupLogicHibernate implements GroupLogic {
     }
 
     static String getQuery = 
-            "SELECT group FROM Group group WHERE group.name = :name";
+            "SELECT group FROM BlinkGroup group WHERE group.name = :name";
     
     @Override
     public BlinkGroup get(String name) {

@@ -3,6 +3,8 @@ package pl.edu.pb.blinklink.model;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -18,10 +20,14 @@ public class UserLink implements Serializable {
     //basic information
     
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne
     protected BlinkUser owner;
+    
+    @ManyToOne
+    protected BlinkUser sender;
     
     @ManyToOne
     protected Link link;
@@ -92,7 +98,31 @@ public class UserLink implements Serializable {
     public void setCreated(Date created) {
         this.created = created;
     }
+
+    public BlinkUser getSender() {
+        return sender;
+    }
+
+    public void setSender(BlinkUser sender) {
+        this.sender = sender;
+    }
+
+    //default constructor
+    public UserLink() {}
     
+    //constructor for unmanaged
+    public UserLink(BlinkUser user, Link link)
+    {
+        this.owner = user;
+        this.link = link;
+        this.created = new Date();
+    }
     
-    
+    public UserLink(BlinkUser user, BlinkUser sender, Link link)
+    {
+        this.owner = user;
+        this.sender = sender;
+        this.link = link;
+        this.created = new Date();
+    }
 }

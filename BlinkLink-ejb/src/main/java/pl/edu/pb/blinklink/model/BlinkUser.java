@@ -31,7 +31,7 @@ public class BlinkUser implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     protected Date lastLogin;
     
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "registered")
     protected Collection<BlinkGroup> groups;
     
     //constructors

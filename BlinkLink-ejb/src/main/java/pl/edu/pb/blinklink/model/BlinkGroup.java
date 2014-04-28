@@ -3,6 +3,7 @@ package pl.edu.pb.blinklink.model;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedList;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -98,4 +99,8 @@ public class BlinkGroup implements Serializable {
         this.created = created;
     }
 
+    public BlinkGroup()
+    {
+        this.registered = new LinkedList<BlinkUser>();
+    }
 }

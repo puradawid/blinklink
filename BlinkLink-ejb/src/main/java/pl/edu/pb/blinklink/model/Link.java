@@ -94,5 +94,13 @@ public class Link implements Serializable {
         this.active = active;
     }
     
+    //constructor
+    public Link() {}
+    
+    //constructor for unmanaged
+    public Link(String referer)
+    {
+        this.referer = referer;
+    }
     
 }

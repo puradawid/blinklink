@@ -25,4 +25,13 @@ public interface UserLogic {
      * @throws UserNotExistsException
      */
     void permDelete(BlinkUser user) throws UserNotExistsException;
+    
+    
+    /**
+     * @TODO!
+     * @param username
+     * @param password
+     * @return 
+     */
+    BlinkUser login(String username, String password);
 }

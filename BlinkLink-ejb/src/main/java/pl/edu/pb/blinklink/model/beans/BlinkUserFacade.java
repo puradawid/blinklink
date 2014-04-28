@@ -3,6 +3,7 @@ package pl.edu.pb.blinklink.model.beans;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import pl.edu.pb.blinklink.model.BlinkUser;
 
 /**
@@ -21,6 +22,12 @@ public class BlinkUserFacade extends AbstractFacade<BlinkUser> {
 
     public BlinkUserFacade() {
         super(BlinkUser.class);
+    }
+    
+    public BlinkUser getUserByEmail(String email)
+    {
+        Query q = em.createQuery("SELECT buser FROM BlinkUser buser WHERE email = '" + email + "'");
+        return (BlinkUser)q.getSingleResult();
     }
     
 }

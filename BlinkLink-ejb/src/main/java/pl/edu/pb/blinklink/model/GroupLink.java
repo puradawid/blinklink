@@ -3,6 +3,8 @@ package pl.edu.pb.blinklink.model;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -18,6 +20,7 @@ public class GroupLink implements Serializable {
 
     //basic infomation
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne
@@ -33,6 +36,9 @@ public class GroupLink implements Serializable {
     boolean deleted;
 
     String description;
+    
+    @ManyToOne
+    protected BlinkUser author;
 
     //getters and setters
     public Long getId() {
@@ -80,6 +86,23 @@ public class GroupLink implements Serializable {
     }
 
     public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public BlinkUser getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(BlinkUser author) {
+        this.author = author;
+    }
+
+    public GroupLink() {}
+    
+    public GroupLink(BlinkUser author, Link l, String description)
+    {
+        this.author = author;
+        this.link = l;
         this.description = description;
     }
 

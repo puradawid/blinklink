@@ -43,6 +43,20 @@
             </snapshots>
         </repository>
         <repository>
+            <id>public-jboss-repository-group</id>
+            <name>JBoss Public Repository Group</name>
+            <url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
             <id>jboss-deprecated</id>
             <name>JBoss Deprecated</name>
             <url>https://repository.jboss.org/nexus/content/repositories/deprecated/</url>
