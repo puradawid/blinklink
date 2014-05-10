@@ -103,4 +103,47 @@ public class BlinkGroup implements Serializable {
     {
         this.registered = new LinkedList<BlinkUser>();
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 89 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 89 * hash + (this.name != null ? this.name.hashCode() : 0);
+        hash = 89 * hash + (this.description != null ? this.description.hashCode() : 0);
+        hash = 89 * hash + (this.registered != null ? this.registered.hashCode() : 0);
+        hash = 89 * hash + (this.owner != null ? this.owner.hashCode() : 0);
+        hash = 89 * hash + (this.created != null ? this.created.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final BlinkGroup other = (BlinkGroup) obj;
+        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+            return false;
+        }
+        if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
+            return false;
+        }
+        if ((this.description == null) ? (other.description != null) : !this.description.equals(other.description)) {
+            return false;
+        }
+        if (this.registered != other.registered && (this.registered == null || !this.registered.equals(other.registered))) {
+            return false;
+        }
+        if (this.owner != other.owner && (this.owner == null || !this.owner.equals(other.owner))) {
+            return false;
+        }
+        if (this.created != other.created && (this.created == null || !this.created.equals(other.created))) {
+            return false;
+        }
+        return true;
+    }
+    
 }

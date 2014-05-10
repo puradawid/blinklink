@@ -74,4 +74,39 @@ public class Rating implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 89 * hash + (this.rates != null ? this.rates.hashCode() : 0);
+        hash = 89 * hash + (int) (Double.doubleToLongBits(this.rate) ^ (Double.doubleToLongBits(this.rate) >>> 32));
+        hash = 89 * hash + this.ratesSize;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Rating other = (Rating) obj;
+        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+            return false;
+        }
+        if (this.rates != other.rates && (this.rates == null || !this.rates.equals(other.rates))) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.rate) != Double.doubleToLongBits(other.rate)) {
+            return false;
+        }
+        if (this.ratesSize != other.ratesSize) {
+            return false;
+        }
+        return true;
+    }
+    
 }

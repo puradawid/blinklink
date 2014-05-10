@@ -85,5 +85,44 @@ public class Rate implements Serializable {
     public void setComment(String comment) {
         this.comment = comment;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 61 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 61 * hash + (this.rater != null ? this.rater.hashCode() : 0);
+        hash = 61 * hash + (this.time != null ? this.time.hashCode() : 0);
+        hash = 61 * hash + this.rate;
+        hash = 61 * hash + (this.comment != null ? this.comment.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Rate other = (Rate) obj;
+        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+            return false;
+        }
+        if (this.rater != other.rater && (this.rater == null || !this.rater.equals(other.rater))) {
+            return false;
+        }
+        if (this.time != other.time && (this.time == null || !this.time.equals(other.time))) {
+            return false;
+        }
+        if (this.rate != other.rate) {
+            return false;
+        }
+        if ((this.comment == null) ? (other.comment != null) : !this.comment.equals(other.comment)) {
+            return false;
+        }
+        return true;
+    }
+    
     
 }

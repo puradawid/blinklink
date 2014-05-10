@@ -125,4 +125,56 @@ public class UserLink implements Serializable {
         this.link = link;
         this.created = new Date();
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 59 * hash + (this.owner != null ? this.owner.hashCode() : 0);
+        hash = 59 * hash + (this.sender != null ? this.sender.hashCode() : 0);
+        hash = 59 * hash + (this.link != null ? this.link.hashCode() : 0);
+        hash = 59 * hash + (this.deleted ? 1 : 0);
+        hash = 59 * hash + (this.category != null ? this.category.hashCode() : 0);
+        hash = 59 * hash + (this.description != null ? this.description.hashCode() : 0);
+        hash = 59 * hash + (this.created != null ? this.created.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final UserLink other = (UserLink) obj;
+        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+            return false;
+        }
+        if (this.owner != other.owner && (this.owner == null || !this.owner.equals(other.owner))) {
+            return false;
+        }
+        if (this.sender != other.sender && (this.sender == null || !this.sender.equals(other.sender))) {
+            return false;
+        }
+        if (this.link != other.link && (this.link == null || !this.link.equals(other.link))) {
+            return false;
+        }
+        if (this.deleted != other.deleted) {
+            return false;
+        }
+        if ((this.category == null) ? (other.category != null) : !this.category.equals(other.category)) {
+            return false;
+        }
+        if ((this.description == null) ? (other.description != null) : !this.description.equals(other.description)) {
+            return false;
+        }
+        if (this.created != other.created && (this.created == null || !this.created.equals(other.created))) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }
