@@ -1,16 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package pl.edu.pb.blinklink.model.initialize;
 
 import java.util.Date;
+import java.util.Random;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.enterprise.context.ApplicationScoped;
+import javax.transaction.UserTransaction;
 import pl.edu.pb.blinklink.model.BlinkGroup;
 import pl.edu.pb.blinklink.model.BlinkUser;
 import pl.edu.pb.blinklink.model.Link;
@@ -26,7 +25,11 @@ import pl.edu.pb.blinklink.model.beans.UserLinkFacade;
  */
 @Singleton
 @Startup
+@ApplicationScoped
 public class DefaultDataIntializer {
+    
+    @Resource
+    UserTransaction utx;
     
     @EJB
     BlinkGroupFacade bgf;
@@ -40,22 +43,33 @@ public class DefaultDataIntializer {
     @EJB
     LinkFacade lf;
     
+    private static String IS_USER_EXISTS = "SELECT blinkuser FROM BlinkUser blinkuser WHERE blinkuser.email = :username"; 
+    
     @PostConstruct
     public void init()
     {
-        BlinkUser bu = createDefaultUser();
-        BlinkGroup bg = createDefaultGroup();
-        Link l = createDefaultLink();
-        UserLink ul = createDefaultUserLink();
-        
-        bg.addUser(bu);
-        ul.setLink(l);
-        ul.setOwner(bu);
-        
-        lf.create(l);
-        bgf.create(bg);
-        buf.create(bu);
-        ulf.create(ul);
+                Logger.getAnonymousLogger().warning("Data will be initialized!");
+                BlinkUser bu = createDefaultUser();
+                BlinkGroup bg = createDefaultGroup();
+                Link l = createDefaultLink();
+                UserLink ul = createDefaultUserLink();
+                
+                if(buf.find(bu.getEmail()) != null)
+                    return;
+
+                bg.addUser(bu);
+                ul.setLink(l);
+                ul.setOwner(bu);
+                
+                try {
+                    buf.create(bu);
+                    lf.create(l);
+                    bgf.create(bg);
+                    ulf.create(ul);
+                } catch (Exception e)
+                {
+                    Logger.getAnonymousLogger().warning(e.getMessage());
+                }
         
     }
     

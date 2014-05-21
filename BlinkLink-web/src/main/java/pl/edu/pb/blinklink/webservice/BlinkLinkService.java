@@ -3,16 +3,22 @@ package pl.edu.pb.blinklink.webservice;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.jws.HandlerChain;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.xml.soap.SOAPMessage;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
+import javax.xml.ws.handler.soap.SOAPMessageContext;
+import org.apache.cxf.binding.soap.SoapMessage;
+import org.apache.cxf.jaxws.context.WrappedMessageContext;
 import pl.edu.pb.blinklink.model.beans.BlinkUserFacade;
 import pl.edu.pb.blinklink.model.BlinkUser;
 import pl.edu.pb.blinklink.model.GroupLink;
@@ -26,11 +32,8 @@ import pl.edu.pb.blinklink.model.logic.exceptions.UserAlreadyRegisteredException
 import pl.edu.pb.blinklink.webservice.model.BlinkUserWebservice;
 import pl.edu.pb.blinklink.webservice.model.UserLinkWebservice;
 
-/**
- *
- * @author dawid
- */
 @WebService(serviceName = "BlinkLinkService")
+@HandlerChain(file="login-handler.xml")
 public class BlinkLinkService {
 
     @Resource
@@ -107,8 +110,7 @@ public class BlinkLinkService {
 
     @WebMethod(exclude = true)
     public BlinkUser getLogin() {
-        HttpSession session = getHttpSession();
-        return (BlinkUser) (session.getAttribute("user"));
+        return (BlinkUser)wsctx.getMessageContext().get("credencials");
     }
 
     @WebMethod(exclude = true)
