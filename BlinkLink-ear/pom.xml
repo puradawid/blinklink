@@ -22,10 +22,7 @@
 	<profiles>
 		<profile>
 			<id>dev</id>
-			<properties>
-				<!-- <deploy.jboss.hostname>localhost</deploy.jboss.hostname> <deploy.jboss.port>9999</deploy.jboss.port> 
-					<deploy.jboss.user>master</deploy.jboss.user> <deploy.jboss.password>root</deploy.jboss.password> -->
-			</properties>
+			<properties></properties>
 		</profile>
 	</profiles>
 
