@@ -9,11 +9,11 @@ package pl.edu.pb.blinklink.model.logic.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
+
 import javax.ejb.EJB;
 import javax.ejb.Local;
-import javax.ejb.Stateful;
 import javax.ejb.Stateless;
+
 import pl.edu.pb.blinklink.model.BlinkUser;
 import pl.edu.pb.blinklink.model.beans.BlinkUserFacade;
 import pl.edu.pb.blinklink.model.logic.UserLogic;

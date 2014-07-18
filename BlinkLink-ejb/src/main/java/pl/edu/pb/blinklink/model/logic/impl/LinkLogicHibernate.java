@@ -6,9 +6,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
 import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+
 import pl.edu.pb.blinklink.model.BlinkGroup;
 import pl.edu.pb.blinklink.model.BlinkUser;
 import pl.edu.pb.blinklink.model.GroupLink;
