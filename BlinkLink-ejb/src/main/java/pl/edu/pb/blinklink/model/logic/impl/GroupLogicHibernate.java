@@ -12,6 +12,7 @@ import javax.ejb.Stateless;
 
 import pl.edu.pb.blinklink.model.BlinkGroup;
 import pl.edu.pb.blinklink.model.BlinkUser;
+import pl.edu.pb.blinklink.model.beans.BlinkGroupDao;
 import pl.edu.pb.blinklink.model.beans.BlinkGroupFacade;
 import pl.edu.pb.blinklink.model.beans.BlinkUserFacade;
 import pl.edu.pb.blinklink.model.logic.GroupLogic;
@@ -19,8 +20,8 @@ import pl.edu.pb.blinklink.model.logic.exceptions.UserAlreadyRegisteredException
 import pl.edu.pb.blinklink.model.logic.exceptions.UserUnregisteredException;
 
 /**
- * 
- * @author dawid
+ * Logic implementation.
+ * @author Dawid Pura
  */
 @Stateless(name = "GroupLogicHibernate")
 @Local(GroupLogic.class)
@@ -28,9 +29,9 @@ public class GroupLogicHibernate implements GroupLogic {
 
     @EJB
     BlinkUserFacade buf;
-    
-    @EJB
-    BlinkGroupFacade bgf;
+   
+    @EJB(beanName="BlinkGroupDaoHibernate")
+    BlinkGroupDao bgd;
     
     @Override
     public void signIn(BlinkUser user, BlinkGroup group) throws UserAlreadyRegisteredException {
@@ -54,25 +55,19 @@ public class GroupLogicHibernate implements GroupLogic {
     
     @Override
     public Collection<String> getGroups() {
-        Collection<BlinkGroup> groups = bgf.findAll();
+        Collection<BlinkGroup> groups = bgd.findAll();
         return convertToStrings(groups);
     }
 
     @Override
     public Collection<String> getGroups(BlinkUser user) {
-        Collection<BlinkGroup> groups = bgf.select(null, null);
+        Collection<BlinkGroup> groups = bgd.findGroupsThatUserRegistered(user);
         return convertToStrings(groups);
     }
 
-    static String getQuery = 
-            "SELECT group FROM BlinkGroup group WHERE group.name = :name";
-    
     @Override
     public BlinkGroup get(String name) {
-        Map<String, Object> params = new TreeMap<String, Object>();
-        List<BlinkGroup> result = bgf.select(getQuery, params);
-        return (result.size() == 1 ? result.get(0) : null );
+        return bgd.findByName(name);
     }
-    
     
 }
