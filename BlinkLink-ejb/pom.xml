@@ -1,193 +1,236 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <artifactId>BlinkLink</artifactId>
-        <groupId>pl.pb.edu.pl</groupId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>BlinkLink</artifactId>
+		<groupId>pl.pb.edu.pl</groupId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
 
-    <groupId>pl.pb.edu.pl</groupId>
-    <artifactId>BlinkLink-ejb</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <packaging>ejb</packaging>
+	<groupId>pl.pb.edu.pl</groupId>
+	<artifactId>BlinkLink-ejb</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>ejb</packaging>
 
-    <name>BlinkLink-ejb</name>
+	<name>BlinkLink-ejb</name>
 
-    <properties>
-        <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-    
-    <dependencies>
-        <!-- test group -->
-        <dependency>
-            <groupId>org.jboss.jbossas</groupId>
-            <artifactId>jboss-as-depchain</artifactId>
-            <version>${version.org.jboss.jbossas}</version>
-            <type>pom</type>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${version.junit}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.as</groupId>
-            <artifactId>jboss-as-embedded</artifactId>
-            <version>7.1.1.Final</version> 
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.spec</groupId>
-            <artifactId>jboss-javaee-6.0</artifactId>
-            <version>3.0.2.Final</version>
-            <type>pom</type>
-            <scope>compile</scope>
-        </dependency> 
-        <dependency>
-            <groupId>org.jboss.logging</groupId>
-            <artifactId>jboss-logging</artifactId>
-            <scope>test</scope>
-            <version>3.1.4.GA</version>
-        </dependency> 
-        <!-- libs -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>1.9</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
-    
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-ejb-plugin</artifactId>
-                <configuration>
-                    <ejbVersion>3.0</ejbVersion>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <inherited>true</inherited>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                    <showDeprecation>false</showDeprecation>
-                    <showWarnings>true</showWarnings>
-                    <optimize>true</optimize>
-                    <compilerVersion>1.6</compilerVersion>
-                    <fork>true</fork>
-                    <argLine>-Xmx512M</argLine>
-                    <executable>${JAVA_HOME}/bin/javac</executable>
-                </configuration>
-            </plugin>
+	<properties>
+		<endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
-            <!-- Surefire -->
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <redirectTestOutputToFile>true</redirectTestOutputToFile>
-                    <trimStackTrace>false</trimStackTrace>
-                    <printSummary>true</printSummary>
-                    <includes>
-                        <include>**/*UnitTest.java</include>
-                    </includes>
-                    <forkMode>always</forkMode>
-                </configuration>
-            </plugin>
-        </plugins>
+	<dependencies>
+		<!-- test group -->
+		<dependency>
+			<groupId>org.jboss.jbossas</groupId>
+			<artifactId>jboss-as-depchain</artifactId>
+			<version>${version.org.jboss.jbossas}</version>
+			<type>pom</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.8.4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${version.junit}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.as</groupId>
+			<artifactId>jboss-as-embedded</artifactId>
+			<version>7.1.1.Final</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.spec</groupId>
+			<artifactId>jboss-javaee-6.0</artifactId>
+			<version>3.0.2.Final</version>
+			<type>pom</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.logging</groupId>
+			<artifactId>jboss-logging</artifactId>
+			<scope>test</scope>
+			<version>3.1.4.GA</version>
+		</dependency>
+		<!-- libs -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.9</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
 
-    </build>
-    
-    <profiles>
-        <profile>
-            <id>embedded</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>integration-test</id>
-                                <phase>integration-test</phase>
-                                <goals>
-                                    <goal>test</goal>
-                                </goals>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ejb-plugin</artifactId>
+				<configuration>
+					<ejbVersion>3.0</ejbVersion>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<inherited>true</inherited>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<showDeprecation>false</showDeprecation>
+					<showWarnings>true</showWarnings>
+					<optimize>true</optimize>
+					<compilerVersion>1.6</compilerVersion>
+					<fork>true</fork>
+					<argLine>-Xmx512M</argLine>
+					<executable>${JAVA_HOME}/bin/javac</executable>
+				</configuration>
+			</plugin>
 
-                                <configuration>
-                                    <additionalClasspathElements>
-                                        <additionalClasspathElement>${JBOSS_HOME}/client/jbossws-native-client.jar</additionalClasspathElement>
-                                        <!--
-                                          Because jbossweb.sar contains shared web.xml,
-                                          which must be visible from same CL as
-                                          TomcatDeployer.class.getClassLoader
-                                        -->
-                                        <additionalClasspathElement>${JBOSS_HOME}/server/default/deploy/jbossweb.sar</additionalClasspathElement>
-                                    </additionalClasspathElements>
+			<!-- Surefire -->
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<redirectTestOutputToFile>true</redirectTestOutputToFile>
+					<trimStackTrace>false</trimStackTrace>
+					<printSummary>true</printSummary>
+					<includes>
+						<include>**/*UnitTest.java</include>
+					</includes>
+					<forkMode>always</forkMode>
+				</configuration>
+			</plugin>
+		</plugins>
 
-                                    <redirectTestOutputToFile>true</redirectTestOutputToFile>
-                                    <trimStackTrace>false</trimStackTrace>
-                                    <printSummary>true</printSummary>
-                                    <includes>
-                                        <include>**/*Test.java</include>
-                                    </includes>
-                                    <forkMode>always</forkMode>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.apache.maven.plugins
+										</groupId>
+										<artifactId>
+											maven-dependency-plugin
+										</artifactId>
+										<versionRange>
+											[2.1,)
+										</versionRange>
+										<goals>
+											<goal>unpack</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 
-                                    <!--
-                                      MaxPermSize Required to bump the space for relective
-                                      data like classes, methods, etc. EMB-41. Endorsed
-                                      required for things like WS support (EMB-61)
-                                    -->
-                                    <argLine>-Xmx512m -XX:MaxPermSize=256m -Djava.net.preferIPv4Stack=true -Djava.util.logging.manager=org.jboss.logmanager.LogManager -Djava.endorsed.dirs=${JBOSS_HOME}/lib/endorsed -Djboss.home=${JBOSS_HOME} -Djboss.boot.server.log.dir=${JBOSS_HOME}</argLine>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
+	<profiles>
+		<profile>
+			<id>embedded</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>integration-test</id>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>test</goal>
+								</goals>
 
-                    <!-- Get AS and put into "target" -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-dependency-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>unpack</id>
-                                <phase>pre-integration-test</phase> <!-- So run before testing -->
-                                <goals>
-                                    <goal>unpack</goal>
-                                </goals>
-                                <configuration>
-                                    <artifactItems>
-                                        <artifactItem>
-                                            <groupId>org.jboss.jbossas</groupId>
-                                            <artifactId>jboss-as-distribution</artifactId>
-                                            <version>${version.org.jboss.jbossas}</version>
-                                            <type>zip</type>
-                                            <overWrite>false</overWrite>
-                                            <outputDirectory>${project.build.directory}</outputDirectory>
-                                        </artifactItem>
-                                    </artifactItems>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
+								<configuration>
+									<additionalClasspathElements>
+										<additionalClasspathElement>${JBOSS_HOME}/client/jbossws-native-client.jar</additionalClasspathElement>
+										<!-- Because jbossweb.sar contains shared web.xml, which must be 
+											visible from same CL as TomcatDeployer.class.getClassLoader -->
+										<additionalClasspathElement>${JBOSS_HOME}/server/default/deploy/jbossweb.sar</additionalClasspathElement>
+									</additionalClasspathElements>
 
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+									<redirectTestOutputToFile>true</redirectTestOutputToFile>
+									<trimStackTrace>false</trimStackTrace>
+									<printSummary>true</printSummary>
+									<includes>
+										<include>**/*Test.java</include>
+									</includes>
+									<forkMode>always</forkMode>
+
+									<!-- MaxPermSize Required to bump the space for relective data like 
+										classes, methods, etc. EMB-41. Endorsed required for things like WS support 
+										(EMB-61) -->
+									<argLine>-Xmx512m -XX:MaxPermSize=256m
+										-Djava.net.preferIPv4Stack=true
+										-Djava.util.logging.manager=org.jboss.logmanager.LogManager
+										-Djava.endorsed.dirs=${JBOSS_HOME}/lib/endorsed
+										-Djboss.home=${JBOSS_HOME}
+										-Djboss.boot.server.log.dir=${JBOSS_HOME}</argLine>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+					<!-- Get AS and put into "target" -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-dependency-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>unpack</id>
+								<phase>pre-integration-test</phase> <!-- So run before testing -->
+								<goals>
+									<goal>unpack</goal>
+								</goals>
+								<configuration>
+									<artifactItems>
+										<artifactItem>
+											<groupId>org.jboss.jbossas</groupId>
+											<artifactId>jboss-as-distribution</artifactId>
+											<version>${version.org.jboss.jbossas}</version>
+											<type>zip</type>
+											<overWrite>false</overWrite>
+											<outputDirectory>${project.build.directory}</outputDirectory>
+										</artifactItem>
+									</artifactItems>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 
 </project>

@@ -2,15 +2,19 @@ package pl.edu.pb.blinklink.model.beans;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import javax.ejb.EJB;
+import javax.ejb.Local;
 import javax.ejb.Stateless;
 
 import pl.edu.pb.blinklink.model.BlinkGroup;
 import pl.edu.pb.blinklink.model.BlinkUser;
+import pl.edu.pb.blinklink.model.GroupLink;
 
+@Local(BlinkGroupDao.class)
 @Stateless(name = "BlinkGroupDaoHibernate")
 public class BlinkGroupDaoHibernate implements BlinkGroupDao {
 	
@@ -40,10 +44,16 @@ public class BlinkGroupDaoHibernate implements BlinkGroupDao {
 		return bgf.findAll();
 	}
 
+	private static String selectGroupsByUserQuery = "SELECT usr.groups FROM BlinkUser usr WHERE usr.email = :email";
 	@Override
 	public Collection<BlinkGroup> findGroupsThatUserRegistered(BlinkUser user) {
-		//TODO: implement that method!
-		return null;
+		if(user == null) return new LinkedList<BlinkGroup>();
+		Map<String, Object> params = new HashMap<String,Object> ();
+        params.put("email", user.getEmail());
+        Collection<BlinkGroup> groups = bgf.select(
+                selectGroupsByUserQuery,
+                params);
+		return groups;
 	}
 
 	@Override

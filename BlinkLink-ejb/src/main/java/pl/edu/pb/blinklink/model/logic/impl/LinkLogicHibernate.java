@@ -16,9 +16,13 @@ import pl.edu.pb.blinklink.model.BlinkUser;
 import pl.edu.pb.blinklink.model.GroupLink;
 import pl.edu.pb.blinklink.model.Link;
 import pl.edu.pb.blinklink.model.UserLink;
+import pl.edu.pb.blinklink.model.beans.BlinkGroupDao;
 import pl.edu.pb.blinklink.model.beans.BlinkGroupFacade;
+import pl.edu.pb.blinklink.model.beans.GroupLinkDao;
 import pl.edu.pb.blinklink.model.beans.GroupLinkFacade;
+import pl.edu.pb.blinklink.model.beans.LinkDao;
 import pl.edu.pb.blinklink.model.beans.LinkFacade;
+import pl.edu.pb.blinklink.model.beans.UserLinkDao;
 import pl.edu.pb.blinklink.model.beans.UserLinkFacade;
 import pl.edu.pb.blinklink.model.logic.LinkLogic;
 import pl.edu.pb.blinklink.model.logic.exceptions.PostingLinkException;
@@ -31,98 +35,52 @@ import pl.edu.pb.blinklink.model.logic.exceptions.PostingLinkException;
 @Local(LinkLogic.class)
 public class LinkLogicHibernate implements LinkLogic {
     
-    @EJB
-    LinkFacade lf;
+    @EJB(beanName="LinkDaoHibernate")
+    LinkDao ld;
     
-    @EJB
-    UserLinkFacade ulf;
+    @EJB(beanName="UserLinkDaoHibernate")
+    UserLinkDao uld;
     
-    @EJB
-    GroupLinkFacade glf;
+    @EJB(beanName="GroupLinkDaoHibernate")
+    GroupLinkDao gld;
     
-    @EJB
-    BlinkGroupFacade bgf;
+    @EJB(beanName="BlinkGroupDaoHibernate")
+    BlinkGroupDao bgd;
+    
+    
     
     public LinkLogicHibernate()
     {
         
     }
     
-    /**
-     * Constructor to avoid beans injection (for testing for example).
-     * @param lf - modified LinkFacade
-     * @param ulf - modified UserLinkFacade
-     * @param glf - modified GroupLinkFacade
-     */
-    LinkLogicHibernate(LinkFacade lf, UserLinkFacade ulf, GroupLinkFacade glf)
+    private Collection<Link> getLink(String referer)
     {
-        this.lf = lf;
-        this.ulf = ulf;
-        this.glf = glf;
-    }
-    
-    private List<Link> getLink(String referer)
-    {
-        Map<String, Object> params = new HashMap<String,Object>();
-        params.put("referer", referer);
-        
-        return lf.select(
-                "SELECT l FROM Link l  WHERE l.referer = :referer", params);
+    	return ld.find(referer);
     }
     
     private boolean isLinkExist(BlinkUser user, UserLink link)
     {
-        Map<String, Object> params = new HashMap<String,Object>();
-        
-        params.put("user", user);
-        params.put("referer", link.getLink());
-        
-        return !lf.select("SELECT l FROM UserLink l "
-                + "WHERE l.owner = :user AND l.link = :referer", params).isEmpty();
+        return !uld.find(user, link.getLink().getReferer()).isEmpty();
     }
     
     private boolean isLinkExist(BlinkUser user, GroupLink link)
     {
-        Map<String, Object> params = new HashMap<String,Object>();
-        
-        params.put("group", link.getGroup());
-        params.put("referer", link.getLink());
-        
-        return !lf.select("SELECT l FROM GroupLink l "
-                + "WHERE l.group = :group AND l.link = :referer", params).isEmpty();
+        return !gld.findAll(link.getGroup(), link.getLink().getReferer()).isEmpty();
     }
     
     @Override
     public Collection<UserLink> getUserLinksPast(BlinkUser user, Date date) {
-        Map<String, Object> params = new HashMap<String,Object> ();
-        params.put("email", user.getEmail());
-        params.put("date", date);
-        return ulf.select(
-                "SELECT l FROM UserLink l WHERE l.owner.email = :email "
-                        + "AND l.created > :date", params);
+    	return uld.findAllSince(user, date);
     }
 
     @Override
     public Collection<GroupLink> getGroupLinksPast(BlinkUser user, Date date) {
-        Map<String, Object> params = new HashMap<String,Object> ();
-        params.put("email", user.getEmail());
-        
-        Collection<GroupLink> result = new LinkedList<GroupLink>();
-        
-        Collection<BlinkGroup> groups = bgf.select(
-                "SELECT usr.groups FROM BlinkUser usr WHERE usr.email = :email",
-                params);
-        params.remove("email");
-        params.put("date", date);
-        for(BlinkGroup g : groups)
-        {
-            params.put("group", g);
-            List<GroupLink> glst = glf.select("SELECT grplnk FROM GroupLink grplnk WHERE grplnk.group = :group AND grplnk.created > :date", params);
-            for(GroupLink gl : glst)
-                result.add(gl);
-        }
-        
-        return result;
+    	Collection<GroupLink> result = new LinkedList<GroupLink>();
+    	Collection<BlinkGroup> userGroups = bgd.findGroupsThatUserRegistered(user);
+    	for(BlinkGroup group : userGroups)
+    		result.addAll(gld.findAllSince(group, date));
+    	return result;
     }
 
     @Override
@@ -131,19 +89,19 @@ public class LinkLogicHibernate implements LinkLogic {
         link.setOwner(user);
         link.setCreated(new Date());
         
-        List<Link> rawLink = getLink(link.getLink().getReferer());
+        Collection<Link> rawLink = getLink(link.getLink().getReferer());
         
         if(!rawLink.isEmpty())
         {
-            link.setLink(rawLink.get(0));
+            link.setLink(rawLink.iterator().next());
             if(isLinkExist(user, link))
             {
                 throw new PostingLinkException("Already posted by this user");
             }
-            ulf.create(link);
+            uld.create(link);
         }
         else
-            lf.create(link.getLink());
+            ld.create(link.getLink());
     }
     
     @Override
@@ -154,14 +112,15 @@ public class LinkLogicHibernate implements LinkLogic {
         
         BlinkGroup bg = null;
         try {
-            bg = bgf.getGroupByName(group);
+            bg = bgd.findByName(group);
             link.setGroup(bg);
         } catch (Exception e) //change it!
         {
             throw new PostingLinkException("Target group not exists.");
         }
         
-        List<Link> rawLink = getLink(link.getLink().getReferer());
+        List<Link> rawLink = new LinkedList<Link>(getLink(link.getLink().getReferer())); //broken glass
+        //TODO: i need refactor!
         
         if(!rawLink.isEmpty())
         {
@@ -170,10 +129,10 @@ public class LinkLogicHibernate implements LinkLogic {
             {
                 throw new PostingLinkException("Already posted by this user");
             }
-            glf.create(link);
+            gld.create(link);
         }
         else
-            lf.create(link.getLink());
+            ld.create(link.getLink());
     }
 
     @Override

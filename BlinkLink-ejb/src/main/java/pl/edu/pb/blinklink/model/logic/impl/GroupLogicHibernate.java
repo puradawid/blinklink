@@ -14,6 +14,7 @@ import pl.edu.pb.blinklink.model.BlinkGroup;
 import pl.edu.pb.blinklink.model.BlinkUser;
 import pl.edu.pb.blinklink.model.beans.BlinkGroupDao;
 import pl.edu.pb.blinklink.model.beans.BlinkGroupFacade;
+import pl.edu.pb.blinklink.model.beans.BlinkUserDao;
 import pl.edu.pb.blinklink.model.beans.BlinkUserFacade;
 import pl.edu.pb.blinklink.model.logic.GroupLogic;
 import pl.edu.pb.blinklink.model.logic.exceptions.UserAlreadyRegisteredException;
@@ -26,23 +27,23 @@ import pl.edu.pb.blinklink.model.logic.exceptions.UserUnregisteredException;
 @Stateless(name = "GroupLogicHibernate")
 @Local(GroupLogic.class)
 public class GroupLogicHibernate implements GroupLogic {
-
-    @EJB
-    BlinkUserFacade buf;
-   
+  
+    @EJB(beanName="BlinkUserDaoHibernate")
+    BlinkUserDao bud;
+    
     @EJB(beanName="BlinkGroupDaoHibernate")
     BlinkGroupDao bgd;
     
     @Override
     public void signIn(BlinkUser user, BlinkGroup group) throws UserAlreadyRegisteredException {
         user.getGroups().add(group); //really naive
-        buf.edit(user);
+        bud.update(user);
     }
 
     @Override
     public void signOff(BlinkUser user, BlinkGroup group) throws UserUnregisteredException {
         user.getGroups().remove(group); //really naive
-        buf.edit(user);
+        bud.update(user);
     }
     
     private static Collection<String> convertToStrings(Collection<BlinkGroup> groups)

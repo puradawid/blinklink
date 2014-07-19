@@ -2,87 +2,76 @@ package pl.edu.pb.blinklink.model.logic;
 
 import java.util.Collection;
 import java.util.Date;
-import javax.ejb.embeddable.EJBContainer;
-import javax.inject.Inject;
-import org.junit.After;
-import org.junit.AfterClass;
+
+import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
 import pl.edu.pb.blinklink.model.BlinkUser;
+import pl.edu.pb.blinklink.model.GroupLink;
+import pl.edu.pb.blinklink.model.Link;
 import pl.edu.pb.blinklink.model.UserLink;
+import pl.edu.pb.blinklink.model.beans.BlinkGroupDao;
+import pl.edu.pb.blinklink.model.beans.GroupLinkDao;
+import pl.edu.pb.blinklink.model.beans.LinkDao;
+import pl.edu.pb.blinklink.model.beans.mock.BlinkGroupDaoMock;
+import pl.edu.pb.blinklink.model.beans.mock.GroupLinkDaoMock;
+import pl.edu.pb.blinklink.model.beans.mock.LinkDaoMock;
+import pl.edu.pb.blinklink.model.logic.exceptions.PostingLinkException;
 import pl.edu.pb.blinklink.model.logic.impl.LinkLogicHibernate;
 
-/**
- *
- * @author dawid
- */
 public class LinkLogicTest {
-    
-    LinkLogicHibernate llh;
-    EJBContainer container;
-    
-    public LinkLogicTest() {
-        
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-        
-    }
-    
-    @After
-    public void tearDown() {
-    }
 
-    /**
-     * Test of getUserLinksPast method, of class LinkLogic.
-     */
-    @org.junit.Test
-    public void testGetUserLinksPast() {
-        //Collection<UserLink> links = llh.getUserLinksPast(new BlinkUser(), new Date());
-        //container = EJBContainer.createEJBContainer();
-        System.out.println("Well it is working");
-        assert(true);
-    }
+	@InjectMocks
+	LinkLogic linkLogic = new LinkLogicHibernate();
 
-    /**
-     * Test of getGroupLinksPast method, of class LinkLogic.
-     */
-    @org.junit.Test
-    public void testGetGroupLinksPast() {
-        
-    }
-
-    /**
-     * Test of postLink method, of class LinkLogic.
-     */
-    @org.junit.Test
-    public void testPostLink() throws Exception {
-        
-    }
-
-    /**
-     * Test of searchLinks method, of class LinkLogic.
-     */
-    @org.junit.Test
-    public void testSearchLinks() {
-        
-    }
-
-    /**
-     * Test of calculateSum method, of class LinkLogic.
-     */
-    @org.junit.Test
-    public void testCalculateSum() {
-        
-    }
-    
+	@Mock
+	GroupLinkDao gld = new GroupLinkDaoMock(); 
+	
+	@Mock
+	BlinkGroupDao bgd = new BlinkGroupDaoMock();
+	
+	@Mock
+	LinkDao ld = new LinkDaoMock();
+	
+	@Before
+	public void init() {
+		MockitoAnnotations.initMocks(this);
+	}
+	
+	@Test
+	public void testIsOkay() {
+		assert linkLogic != null;
+	}
+	
+	@Test
+	public void testNullAnswer() {
+		Collection<GroupLink> result = linkLogic.getGroupLinksPast(null, null);
+		assert result.isEmpty();
+	}
+	
+	Link l = new Link("http://google.com");
+	BlinkUser bu = new BlinkUser("user@gmail.com", "password");
+	UserLink ul = new UserLink(bu, l);
+	
+	@Test
+	public void postLinkTest() {
+		try {
+			linkLogic.postLink(bu, ul);
+		} catch (PostingLinkException ex)
+		{
+			Assert.assertTrue(false);
+		}
+	}
+	
+	//@Test
+	//TODO: repiar this test and impl.
+	public void postLinkAndCatchTest() {
+		postLinkTest();
+		Collection<GroupLink> result = linkLogic.getGroupLinksPast(bu, new Date(Date.UTC(2000, 1, 1, 0, 0, 0)));
+		Assert.assertFalse(result.isEmpty());
+	}
 }
