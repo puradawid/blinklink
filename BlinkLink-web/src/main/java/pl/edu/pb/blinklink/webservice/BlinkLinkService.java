@@ -32,10 +32,12 @@ import pl.edu.pb.blinklink.model.logic.exceptions.UserAlreadyRegisteredException
 import pl.edu.pb.blinklink.webservice.model.BlinkUserWebservice;
 import pl.edu.pb.blinklink.webservice.model.UserLinkWebservice;
 
-@WebService(serviceName = "BlinkLinkService")
+@WebService(serviceName = "BlinkLinkService", targetNamespace="http://webservice.blinklink.pb.edu.pl")
 @HandlerChain(file="login-handler.xml")
 public class BlinkLinkService {
-
+	
+	private static Logger logger = Logger.getLogger(BlinkLinkService.class.getName());
+	
     @Resource
     WebServiceContext wsctx;
 
@@ -75,8 +77,10 @@ public class BlinkLinkService {
                 }
                 }
             }
+            logger.info("User fetch data");
             return "OK!";
         } else {
+        	logger.warning("User not logged in!");
             return "You are not logged in!";
         }
     }
