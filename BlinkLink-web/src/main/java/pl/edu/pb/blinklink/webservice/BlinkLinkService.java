@@ -32,7 +32,7 @@ import pl.edu.pb.blinklink.model.logic.exceptions.UserAlreadyRegisteredException
 import pl.edu.pb.blinklink.webservice.model.BlinkUserWebservice;
 import pl.edu.pb.blinklink.webservice.model.UserLinkWebservice;
 
-@WebService(serviceName = "BlinkLinkService", targetNamespace="http://webservice.blinklink.pb.edu.pl")
+@WebService(serviceName = "BlinkLinkService", targetNamespace="http://webservice.blinklink.pb.edu.pl/")
 @HandlerChain(file="login-handler.xml")
 public class BlinkLinkService {
 	
@@ -54,9 +54,9 @@ public class BlinkLinkService {
     UserLogic ul;
 
     @WebMethod(operationName = "postLink")
-    public String postLink(@WebParam(name = "referer") String referer,
-            @WebParam(name = "targets") Collection<String> targets,
-            @WebParam(name = "description") String description) {
+    public String postLink(@WebParam(name = "referer", targetNamespace="http://webservice.blinklink.pb.edu.pl/") String referer,
+            @WebParam(name = "targets", targetNamespace="http://webservice.blinklink.pb.edu.pl/") Collection<String> targets,
+            @WebParam(name = "description", targetNamespace="http://webservice.blinklink.pb.edu.pl/") String description) {
         if (checkCredencials()) {
             for (String target : targets) {
                 if(target.startsWith("@"))
