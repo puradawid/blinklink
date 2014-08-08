@@ -3,12 +3,14 @@ package pl.edu.pb.blinklink.model.logic;
 import java.util.Collection;
 import java.util.Date;
 
+import org.joda.time.DateTime;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 import pl.edu.pb.blinklink.model.BlinkUser;
 import pl.edu.pb.blinklink.model.GroupLink;
@@ -17,25 +19,30 @@ import pl.edu.pb.blinklink.model.UserLink;
 import pl.edu.pb.blinklink.model.beans.BlinkGroupDao;
 import pl.edu.pb.blinklink.model.beans.GroupLinkDao;
 import pl.edu.pb.blinklink.model.beans.LinkDao;
+import pl.edu.pb.blinklink.model.beans.UserLinkDao;
 import pl.edu.pb.blinklink.model.beans.mock.BlinkGroupDaoMock;
 import pl.edu.pb.blinklink.model.beans.mock.GroupLinkDaoMock;
 import pl.edu.pb.blinklink.model.beans.mock.LinkDaoMock;
+import pl.edu.pb.blinklink.model.beans.mock.UserLinkDaoMock;
 import pl.edu.pb.blinklink.model.logic.exceptions.PostingLinkException;
 import pl.edu.pb.blinklink.model.logic.impl.LinkLogicHibernate;
 
 public class LinkLogicTest {
 
 	@InjectMocks
-	LinkLogic linkLogic = new LinkLogicHibernate();
+	LinkLogic cut = new LinkLogicHibernate();
 
-	@Mock
+	@Spy
 	GroupLinkDao gld = new GroupLinkDaoMock(); 
 	
-	@Mock
+	@Spy
 	BlinkGroupDao bgd = new BlinkGroupDaoMock();
 	
-	@Mock
+	@Spy
 	LinkDao ld = new LinkDaoMock();
+	
+	@Spy
+	UserLinkDao uld = new UserLinkDaoMock();
 	
 	@Before
 	public void init() {
@@ -44,12 +51,18 @@ public class LinkLogicTest {
 	
 	@Test
 	public void testIsOkay() {
-		assert linkLogic != null;
+		assert cut != null;
+	}
+	
+	@Test
+	public void testAbstractDataStorage() {
+		ld.create(new Link("http://example.host.com"));
+		Assert.assertEquals(ld.findAll().size(), 1);
 	}
 	
 	@Test
 	public void testNullAnswer() {
-		Collection<GroupLink> result = linkLogic.getGroupLinksPast(null, null);
+		Collection<GroupLink> result = cut.getGroupLinksPast(null, null);
 		assert result.isEmpty();
 	}
 	
@@ -58,20 +71,20 @@ public class LinkLogicTest {
 	UserLink ul = new UserLink(bu, l);
 	
 	@Test
-	public void postLinkTest() {
+	public void postUserLinkTest() {
+		ul.setOwner(bu);
 		try {
-			linkLogic.postLink(bu, ul);
+			cut.postLink(bu, ul);
 		} catch (PostingLinkException ex)
 		{
 			Assert.assertTrue(false);
 		}
 	}
 	
-	//@Test
-	//TODO: repiar this test and impl.
+	@Test
 	public void postLinkAndCatchTest() {
-		postLinkTest();
-		Collection<GroupLink> result = linkLogic.getGroupLinksPast(bu, new Date(Date.UTC(2000, 1, 1, 0, 0, 0)));
+		postUserLinkTest();
+		Collection<UserLink> result = cut.getUserLinksPast(bu, new DateTime(2013, 1, 1, 0, 0).toDate());
 		Assert.assertFalse(result.isEmpty());
 	}
 }

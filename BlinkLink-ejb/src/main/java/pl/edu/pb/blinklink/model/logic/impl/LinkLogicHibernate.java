@@ -98,10 +98,10 @@ public class LinkLogicHibernate implements LinkLogic {
             {
                 throw new PostingLinkException("Already posted by this user");
             }
-            uld.create(link);
         }
         else
             ld.create(link.getLink());
+        uld.create(link);
     }
     
     @Override
