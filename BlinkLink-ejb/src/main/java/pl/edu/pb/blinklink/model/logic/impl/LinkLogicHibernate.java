@@ -126,13 +126,11 @@ public class LinkLogicHibernate implements LinkLogic {
         {
             link.setLink(rawLink.get(0));
             if(isLinkExist(user, link))
-            {
                 throw new PostingLinkException("Already posted by this user");
-            }
-            gld.create(link);
         }
         else
             ld.create(link.getLink());
+        gld.create(link);
     }
 
     @Override
