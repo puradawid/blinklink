@@ -63,6 +63,7 @@ public class BlinkLinkService {
                 try {
                     BlinkUser targetUser = buf.getUserByEmail(target.substring(1));
                     UserLink l = new UserLink(targetUser, getLogin(), new Link(referer));
+                    l.setDescription(description);
                     ll.postLink(targetUser, l);
                 } catch (PostingLinkException e) {
                     Logger.getLogger(getClass().getName()).info("Unathorized user");
