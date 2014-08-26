@@ -2,6 +2,7 @@ package pl.edu.pb.blinklink.model.beans;
 
 import java.util.List;
 import java.util.Map;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 

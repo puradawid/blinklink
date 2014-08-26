@@ -1,8 +1,8 @@
 package pl.edu.pb.blinklink.model.initialize;
 
 import java.util.Date;
-import java.util.Random;
 import java.util.logging.Logger;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -10,6 +10,7 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.UserTransaction;
+
 import pl.edu.pb.blinklink.model.BlinkGroup;
 import pl.edu.pb.blinklink.model.BlinkUser;
 import pl.edu.pb.blinklink.model.Link;

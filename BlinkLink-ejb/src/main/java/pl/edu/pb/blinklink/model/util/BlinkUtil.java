@@ -1,8 +1,8 @@
 package pl.edu.pb.blinklink.model.util;
 
 import java.io.Serializable;
-import java.security.MessageDigest;
 import java.util.Collection;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.SerializationUtils;
 

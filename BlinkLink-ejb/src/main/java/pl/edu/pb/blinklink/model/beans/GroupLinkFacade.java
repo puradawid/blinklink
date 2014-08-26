@@ -9,6 +9,7 @@ package pl.edu.pb.blinklink.model.beans;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import pl.edu.pb.blinklink.model.GroupLink;
 
 /**

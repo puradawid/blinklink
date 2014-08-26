@@ -1,12 +1,11 @@
 package pl.edu.pb.blinklink.webservice.handlers;
 
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Set;
+
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.xml.namespace.QName;
-import javax.xml.soap.Name;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPHeader;
 import javax.xml.soap.SOAPHeaderElement;
@@ -15,6 +14,7 @@ import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
+
 import pl.edu.pb.blinklink.model.logic.UserLogic;
 
 /**

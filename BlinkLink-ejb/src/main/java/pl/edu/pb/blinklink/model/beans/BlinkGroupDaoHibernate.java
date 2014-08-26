@@ -12,7 +12,6 @@ import javax.ejb.Stateless;
 
 import pl.edu.pb.blinklink.model.BlinkGroup;
 import pl.edu.pb.blinklink.model.BlinkUser;
-import pl.edu.pb.blinklink.model.GroupLink;
 
 @Local(BlinkGroupDao.class)
 @Stateless(name = "BlinkGroupDaoHibernate")

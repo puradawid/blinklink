@@ -1,6 +1,7 @@
 package pl.edu.pb.blinklink.model.logic;
 
 import javax.ejb.Local;
+
 import pl.edu.pb.blinklink.model.BlinkUser;
 import pl.edu.pb.blinklink.model.logic.exceptions.UserAlreadyExistException;
 import pl.edu.pb.blinklink.model.logic.exceptions.UserNotExistsException;

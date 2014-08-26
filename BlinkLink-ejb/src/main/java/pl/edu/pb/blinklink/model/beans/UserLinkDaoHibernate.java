@@ -9,9 +9,7 @@ import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 
-import pl.edu.pb.blinklink.model.BlinkGroup;
 import pl.edu.pb.blinklink.model.BlinkUser;
-import pl.edu.pb.blinklink.model.GroupLink;
 import pl.edu.pb.blinklink.model.UserLink;
 
 @Local(UserLinkDao.class)

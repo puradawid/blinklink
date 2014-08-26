@@ -2,8 +2,9 @@ package pl.edu.pb.blinklink.model.logic;
 
 import java.util.Collection;
 import java.util.Date;
+
 import javax.ejb.Local;
-import pl.edu.pb.blinklink.model.BlinkGroup;
+
 import pl.edu.pb.blinklink.model.BlinkUser;
 import pl.edu.pb.blinklink.model.GroupLink;
 import pl.edu.pb.blinklink.model.Link;

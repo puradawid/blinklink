@@ -3,8 +3,10 @@ package pl.edu.pb.blinklink.webservice.model;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
 import pl.edu.pb.blinklink.model.BlinkGroup;
 import pl.edu.pb.blinklink.model.BlinkUser;
 

@@ -1,7 +1,9 @@
 package pl.edu.pb.blinklink.webservice.model;
 
 import java.util.Date;
+
 import javax.xml.bind.annotation.XmlElement;
+
 import pl.edu.pb.blinklink.model.GroupLink;
 import pl.edu.pb.blinklink.model.UserLink;
 

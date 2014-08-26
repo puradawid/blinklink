@@ -1,8 +1,10 @@
 package pl.edu.pb.blinklink.webservice.model;
 
 import java.util.Date;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
 import pl.edu.pb.blinklink.model.Rate;
 
 /**

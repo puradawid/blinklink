@@ -5,4 +5,7 @@
 		xmlns={@XmlNs(prefix="ns0", namespaceURI="http://webservice.blinklink.pb.edu.pl")})
 package pl.edu.pb.blinklink.webservice.model;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlNs;
+import javax.xml.bind.annotation.XmlNsForm;
+import javax.xml.bind.annotation.XmlSchema;
+

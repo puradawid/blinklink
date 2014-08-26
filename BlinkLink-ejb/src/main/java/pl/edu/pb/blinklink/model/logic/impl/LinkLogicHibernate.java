@@ -2,10 +2,8 @@ package pl.edu.pb.blinklink.model.logic.impl;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
@@ -17,13 +15,9 @@ import pl.edu.pb.blinklink.model.GroupLink;
 import pl.edu.pb.blinklink.model.Link;
 import pl.edu.pb.blinklink.model.UserLink;
 import pl.edu.pb.blinklink.model.beans.BlinkGroupDao;
-import pl.edu.pb.blinklink.model.beans.BlinkGroupFacade;
 import pl.edu.pb.blinklink.model.beans.GroupLinkDao;
-import pl.edu.pb.blinklink.model.beans.GroupLinkFacade;
 import pl.edu.pb.blinklink.model.beans.LinkDao;
-import pl.edu.pb.blinklink.model.beans.LinkFacade;
 import pl.edu.pb.blinklink.model.beans.UserLinkDao;
-import pl.edu.pb.blinklink.model.beans.UserLinkFacade;
 import pl.edu.pb.blinklink.model.logic.LinkLogic;
 import pl.edu.pb.blinklink.model.logic.exceptions.PostingLinkException;
 

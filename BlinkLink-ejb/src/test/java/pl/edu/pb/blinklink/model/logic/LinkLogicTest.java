@@ -1,14 +1,12 @@
 package pl.edu.pb.blinklink.model.logic;
 
 import java.util.Collection;
-import java.util.Date;
 
 import org.joda.time.DateTime;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
