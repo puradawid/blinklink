@@ -25,10 +25,18 @@ public class BlinkUserFacade extends AbstractFacade<BlinkUser> {
         super(BlinkUser.class);
     }
     
-    public BlinkUser getUserByEmail(String email)
+    public static class UserDoesntExists extends Exception {
+		private static final long serialVersionUID = 1L;
+    }
+    
+    public BlinkUser getUserByEmail(String email) throws UserDoesntExists
     {
         Query q = em.createQuery("SELECT buser FROM BlinkUser buser WHERE email = '" + email + "'");
+        try {
         return (BlinkUser)q.getSingleResult();
+        } catch (Exception e) {
+        	throw new UserDoesntExists();
+        }
     }
     
 }
