@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
 
+import pl.edu.pb.blinklink.model.BlinkGroup;
 import pl.edu.pb.blinklink.model.BlinkUser;
 import pl.edu.pb.blinklink.model.GroupLink;
 import pl.edu.pb.blinklink.model.Link;
@@ -165,6 +166,11 @@ public class BlinkLinkService {
 		return usersStrings;
 	}
 
+	@WebMethod(operationName = "getGroups")
+	public Collection<String> getGroups() {
+		return gl.getGroups(getLogin());
+	}
+	
 	@WebMethod(operationName = "signToGroup")
 	public String signToGroup(@WebParam(name = "groupName") String groupName) {
 		try {
