@@ -111,73 +111,17 @@ public class BlinkLinkService {
 	}
 
 	@WebMethod(exclude = true)
-	public boolean checkCredencials() {
+	private boolean checkCredencials() {
 		return getLogin() != null;
 	}
 
 	@WebMethod(exclude = true)
-	public BlinkUser logIn(String username, String password) {
+	private BlinkUser logIn(String username, String password) {
 		return ul.login(username, password);
 	}
 
 	@WebMethod(exclude = true)
-	public BlinkUser getLogin() {
+	private BlinkUser getLogin() {
 		return (BlinkUser) wsctx.getMessageContext().get("credencials");
-	}
-
-	@WebMethod(exclude = true)
-	public HttpSession getHttpSession() {
-		return ((HttpServletRequest) wsctx.getMessageContext().get(
-				MessageContext.SERVLET_REQUEST)).getSession();
-	}
-
-	public String login(@WebParam(name = "username") String username,
-			@WebParam(name = "password") String password) {
-		HttpSession session = getHttpSession();
-		BlinkUser user = ul.login(username, password);
-
-		if (user == null) {
-			return "You are not logged in!";
-		}
-
-		session.setAttribute("user", user);
-		return "OK!";
-	}
-
-	@WebMethod(operationName = "registerUser")
-	public String registerUser(@WebParam(name = "username") String username,
-			@WebParam(name = "password") String password) {
-		if (username == null || password == null) {
-			throw new RuntimeException("No empty strings allowed");
-		}
-		BlinkUser bu = new BlinkUser(username, password);
-		buf.create(bu);
-		return "OK";
-	}
-
-	@WebMethod(operationName = "listUsers")
-	public Collection<BlinkUserWebservice> listUsers() {
-		Collection<BlinkUser> users = buf.findAll();
-		Collection<BlinkUserWebservice> usersStrings = new LinkedList<BlinkUserWebservice>();
-		for (BlinkUser user : users) {
-			usersStrings.add(BlinkUserWebservice.getInstance(user));
-		}
-
-		return usersStrings;
-	}
-
-	@WebMethod(operationName = "getGroups")
-	public Collection<String> getGroups() {
-		return gl.getGroups(getLogin());
-	}
-	
-	@WebMethod(operationName = "signToGroup")
-	public String signToGroup(@WebParam(name = "groupName") String groupName) {
-		try {
-			gl.signIn(getLogin(), gl.get(groupName));
-		} catch (UserAlreadyRegisteredException e) {
-			return e.getMessage();
-		}
-		return "OK";
 	}
 }
