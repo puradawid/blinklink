@@ -110,17 +110,10 @@ public class BlinkLinkService {
 		return links;
 	}
 
-	@WebMethod(exclude = true)
 	private boolean checkCredencials() {
 		return getLogin() != null;
 	}
 
-	@WebMethod(exclude = true)
-	private BlinkUser logIn(String username, String password) {
-		return ul.login(username, password);
-	}
-
-	@WebMethod(exclude = true)
 	private BlinkUser getLogin() {
 		return (BlinkUser) wsctx.getMessageContext().get("credencials");
 	}
