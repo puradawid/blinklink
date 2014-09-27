@@ -18,7 +18,7 @@ import javax.xml.ws.handler.soap.SOAPMessageContext;
 import pl.edu.pb.blinklink.model.logic.UserLogic;
 
 /**
- *
+ * Class responsible for adding credencials field in context - logged user.
  * @author dawid
  */
 public class LoginHandler implements SOAPHandler<SOAPMessageContext> {
