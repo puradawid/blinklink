@@ -38,7 +38,7 @@ public class BlinkUserDaoHibernate implements BlinkUserDao{
 	@Override
 	public BlinkUser login(String username, String password) {
 		BlinkUser user = buf.find(username);
-		return (user.getPassword().equals(password) ? user : null);
+		return ((user != null && user.getPassword().equals(password)) ? user : null);
 	}
 
 }
