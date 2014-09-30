@@ -40,6 +40,11 @@
 			<version>2.0.1.SP2</version>
 		</dependency>
 		<dependency>
+			<groupId>jboss.jbossws</groupId>
+			<artifactId>jbossws-core</artifactId>
+			<version>3.0.1-native-2.0.4.GA</version>
+		</dependency>
+		<dependency>
 			<groupId>org.jboss.ws.cxf</groupId>
 			<artifactId>jbossws-cxf-server</artifactId>
 			<version>4.2.0.Alpha1</version>
@@ -71,6 +76,11 @@
 			<groupId>org.jboss.arquillian.container</groupId>
 			<artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
 			<version>1.0.0.CR3</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.shrinkwrap.resolver</groupId>
+			<artifactId>shrinkwrap-resolver-impl-maven</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
