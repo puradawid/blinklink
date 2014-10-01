@@ -11,7 +11,7 @@
 	<groupId>pl.pb.edu.pl</groupId>
 	<artifactId>BlinkLink-ejb</artifactId>
 	<version>1.0-SNAPSHOT</version>
-	<packaging>ejb</packaging>
+	<packaging>${packaging.type}</packaging>
 
 	<name>BlinkLink-ejb</name>
 
@@ -153,6 +153,22 @@
 	</build>
 
 	<profiles>
+		<profile>
+			<id>ejb-package</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<packaging.type>ejb</packaging.type>
+			</properties>
+		</profile>
+		<profile>
+			<id>arquillian-test</id>
+			<properties>
+				<packaging.type>jar</packaging.type>
+			</properties>
+		</profile>
+	
 		<profile>
 			<id>embedded</id>
 			<activation>
