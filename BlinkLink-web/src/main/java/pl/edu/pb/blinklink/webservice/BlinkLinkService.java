@@ -7,28 +7,23 @@ import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.jws.HandlerChain;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.xml.ws.WebServiceContext;
-import javax.xml.ws.handler.MessageContext;
 
-import pl.edu.pb.blinklink.model.BlinkGroup;
 import pl.edu.pb.blinklink.model.BlinkUser;
 import pl.edu.pb.blinklink.model.GroupLink;
 import pl.edu.pb.blinklink.model.Link;
 import pl.edu.pb.blinklink.model.UserLink;
-import pl.edu.pb.blinklink.model.beans.BlinkUserFacade;
-import pl.edu.pb.blinklink.model.beans.BlinkUserFacade.UserDoesntExists;
+import pl.edu.pb.blinklink.model.beans.BlinkUserDao;
+import pl.edu.pb.blinklink.model.beans.BlinkUserDao.UserNotFoundException;
 import pl.edu.pb.blinklink.model.logic.GroupLogic;
 import pl.edu.pb.blinklink.model.logic.LinkLogic;
 import pl.edu.pb.blinklink.model.logic.UserLogic;
 import pl.edu.pb.blinklink.model.logic.exceptions.PostingLinkException;
-import pl.edu.pb.blinklink.model.logic.exceptions.UserAlreadyRegisteredException;
-import pl.edu.pb.blinklink.webservice.model.BlinkUserWebservice;
 import pl.edu.pb.blinklink.webservice.model.UserLinkWebservice;
 
 @WebService(serviceName = "BlinkLinkService", targetNamespace = "http://webservice.blinklink.pb.edu.pl/")
@@ -42,15 +37,15 @@ public class BlinkLinkService {
 	WebServiceContext wsctx;
 
 	@EJB
-	BlinkUserFacade buf;
+	BlinkUserDao bud;
 
-	@EJB(beanName = "LinkLogicHibernate")
+	@EJB(beanName="LinkLogicHibernate")
 	LinkLogic ll;
 
 	@EJB(beanName = "GroupLogicHibernate")
 	GroupLogic gl;
 
-	@EJB(beanName = "UserLogicHibernate")
+	@EJB(beanName  = "UserLogicHibernate")
 	UserLogic ul;
 
 	@WebMethod(operationName = "postLink")
@@ -62,13 +57,13 @@ public class BlinkLinkService {
 			for (String target : targets) {
 				if (target.startsWith("@"))
 					try {
-						BlinkUser targetUser = buf.getUserByEmail(target
+						BlinkUser targetUser = bud.findByName(target
 								.substring(1));
 						UserLink l = new UserLink(targetUser, getLogin(),
 								new Link(referer));
 						l.setDescription(description);
 						ll.postLink(targetUser, l);
-					} catch (UserDoesntExists e) {
+					} catch (UserNotFoundException e) { //change this exception to more model
 						continue; // skip this entry
 					} catch (PostingLinkException e) {
 						Logger.getLogger(getClass().getName()).info(
@@ -78,7 +73,7 @@ public class BlinkLinkService {
 					try {
 						GroupLink l = new GroupLink(getLogin(), new Link(
 								referer), description);
-						ll.postLink(getLogin(), l, target.substring((1)));
+						ll.postLink(getLogin(), l, target.substring(1));
 					} catch (PostingLinkException e) {
 						Logger.getLogger(getClass().getName()).info(
 								"Unathorized user");
@@ -109,12 +104,18 @@ public class BlinkLinkService {
 			links.add(new UserLinkWebservice(gl));
 		return links;
 	}
-
+	
+	@WebMethod(operationName = "getGroups")
+	public Collection<String> getGroups() {
+		return gl.getGroups(getLogin());
+	}
+	
 	private boolean checkCredencials() {
 		return getLogin() != null;
 	}
 
 	private BlinkUser getLogin() {
-		return (BlinkUser) wsctx.getMessageContext().get("credencials");
+		return (BlinkUser) wsctx.getMessageContext()
+				.get("credencials");
 	}
 }
