@@ -205,7 +205,6 @@
 				<version>2.1.1</version>
 				<configuration>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
-<!-- 					<packagingIncludes>**/*.xml,**/*.properties,**/*.class,**/*.html,**/*.xhtml,**/*.png,**/*.css,**/*.js,**/*.jsp</packagingIncludes> -->
 				</configuration>
 			</plugin>
 			<plugin>
