@@ -47,9 +47,9 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.jboss.as.plugins</groupId>
-				<artifactId>jboss-as-maven-plugin</artifactId>
-				<version>7.1.1.Final</version>
+				<groupId>org.wildfly.plugins</groupId>
+				<artifactId>wildfly-maven-plugin</artifactId>
+				<version>1.0.2.Final</version>
 				<configuration>
 					<hostname>${deploy.jboss.host}</hostname>
 					<port>${deploy.jboss.port}</port>
@@ -61,7 +61,6 @@
 				</configuration>
 				<executions>
 					<execution>
-						<id>deploy-jar</id>
 						<phase>install</phase>
 						<goals>
 							<goal>deploy</goal>
