@@ -29,9 +29,6 @@ import pl.edu.pb.blinklink.model.beans.UserLinkFacade;
 @ApplicationScoped
 public class DefaultDataIntializer {
     
-    @Resource
-    UserTransaction utx;
-    
     @EJB
     BlinkGroupFacade bgf;
     

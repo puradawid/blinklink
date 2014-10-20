@@ -35,26 +35,6 @@
 			<type>pom</type>
 		</dependency>
 		<dependency>
-			<groupId>org.jboss</groupId>
-			<artifactId>jboss-jaxws</artifactId>
-			<version>2.0.1.SP2</version>
-		</dependency>
-		<dependency>
-			<groupId>jboss.jbossws</groupId>
-			<artifactId>jbossws-core</artifactId>
-			<version>3.0.1-native-2.0.4.GA</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.ws.cxf</groupId>
-			<artifactId>jbossws-cxf-server</artifactId>
-			<version>4.2.0.Alpha1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-bindings-soap</artifactId>
-			<version>2.7.11</version>
-		</dependency>
-		<dependency>
 			<groupId>org.bootsfaces</groupId>
 			<artifactId>bootsfaces</artifactId>
 			<version>0.3.7</version>
@@ -64,26 +44,6 @@
 			<groupId>com.sun.faces</groupId>
 			<artifactId>jsf-api</artifactId>
 			<version>2.2.2</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.faces</groupId>
-			<artifactId>jsf-impl</artifactId>
-			<version>2.2.2</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.gatein</groupId>
-			<artifactId>cdi-portlet-integration</artifactId>
-			<version>1.0.0.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.gatein</groupId>
-			<artifactId>cdi-portlet-integration</artifactId>
-			<version>1.0.0.Final</version>
 			<scope>provided</scope>
 		</dependency>
 		<!-- Testing section -->

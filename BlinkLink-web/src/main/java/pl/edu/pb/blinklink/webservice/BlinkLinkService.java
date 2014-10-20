@@ -109,6 +109,11 @@ public class BlinkLinkService {
 	public Collection<String> getGroups() {
 		return gl.getGroups(getLogin());
 	}
+
+	@WebMethod(operationName="")
+	public void commentLink() {
+		
+	}
 	
 	private boolean checkCredencials() {
 		return getLogin() != null;
