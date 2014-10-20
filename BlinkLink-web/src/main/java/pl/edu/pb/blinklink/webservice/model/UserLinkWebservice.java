@@ -23,6 +23,8 @@ public class UserLinkWebservice {
     
     private String sender;
     
+    private long id;
+    
     public UserLinkWebservice() {}
     
     public UserLinkWebservice(UserLink ul)
@@ -32,6 +34,7 @@ public class UserLinkWebservice {
         this.created = (Date)ul.getCreated().clone();
         this.sender = ul.getOwner().getEmail();
         this.referer = ul.getLink().getReferer();
+        this.id = ul.getId();
     }
     
     public UserLinkWebservice(GroupLink ul)
@@ -40,6 +43,7 @@ public class UserLinkWebservice {
         this.created = (Date)ul.getCreated().clone();
         this.sender = ul.getGroup().getName();
         this.referer = ul.getLink().getReferer();
+        this.id = ul.getId();
     }
     
     @XmlElement(name="category")
@@ -66,4 +70,10 @@ public class UserLinkWebservice {
     public String getSender() {
         return sender;
     }
+    
+    @XmlElement(name="id")
+    public long getId() {
+    	return id;
+    }
+    
 }
