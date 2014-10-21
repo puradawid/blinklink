@@ -90,7 +90,7 @@ public class BlinkLinkService {
 
 	@WebMethod(operationName = "getLinksSince")
 	public Collection<UserLinkWebservice> getLinksSince(
-			@WebParam(name = "since") Date since) {
+			@WebParam(name = "since", targetNamespace = "http://webservice.blinklink.pb.edu.pl/") Date since) {
 		BlinkUser user = getLogin();
 		if (user == null) {
 			throw new RuntimeException("No logged user");
