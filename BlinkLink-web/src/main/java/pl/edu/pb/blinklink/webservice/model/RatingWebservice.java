@@ -22,7 +22,7 @@ public class RatingWebservice {
 	public RatingWebservice() {}
 	
 	public RatingWebservice(Rating rating) {
-		this.rate = rating.getRate();
+		this.rate = rating.recalculateRate();
 		this.ratesSize = rating.getRatesSize();
 		this.rates = transformToRateWebserviceObjects(rating.getRates());
 	}
