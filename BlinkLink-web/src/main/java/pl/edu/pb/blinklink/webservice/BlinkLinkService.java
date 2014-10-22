@@ -17,11 +17,13 @@ import javax.xml.ws.WebServiceContext;
 import pl.edu.pb.blinklink.model.BlinkUser;
 import pl.edu.pb.blinklink.model.GroupLink;
 import pl.edu.pb.blinklink.model.Link;
+import pl.edu.pb.blinklink.model.Rate;
 import pl.edu.pb.blinklink.model.UserLink;
 import pl.edu.pb.blinklink.model.beans.BlinkUserDao;
 import pl.edu.pb.blinklink.model.beans.BlinkUserDao.UserNotFoundException;
 import pl.edu.pb.blinklink.model.logic.GroupLogic;
 import pl.edu.pb.blinklink.model.logic.LinkLogic;
+import pl.edu.pb.blinklink.model.logic.LinkLogic.RequestProcessException;
 import pl.edu.pb.blinklink.model.logic.UserLogic;
 import pl.edu.pb.blinklink.model.logic.exceptions.PostingLinkException;
 import pl.edu.pb.blinklink.webservice.model.UserLinkWebservice;
@@ -110,9 +112,14 @@ public class BlinkLinkService {
 		return gl.getGroups(getLogin());
 	}
 
-	@WebMethod(operationName="")
-	public void commentLink() {
-		
+	@WebMethod(operationName="commentLink")
+	public void commentLink(long linkId, String commentary, int vote) {
+		Rate rate = new Rate(getLogin(), vote, commentary);
+		try {
+			ll.rateLink(rate, linkId);
+		}catch(RequestProcessException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	private boolean checkCredencials() {

@@ -1,6 +1,7 @@
 package pl.edu.pb.blinklink.model;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -13,11 +14,13 @@ import javax.persistence.OneToMany;
  */
 @Entity
 public class Rating implements Serializable {
-    @Id
+	private static final long serialVersionUID = 1L;
+
+	@Id
     private Long id;
     
     @OneToMany
-    List<Rate> rates;
+    List<Rate> rates = new LinkedList<Rate>();
     
     protected double rate;
     

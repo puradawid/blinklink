@@ -8,6 +8,7 @@ import javax.ejb.Local;
 import pl.edu.pb.blinklink.model.BlinkUser;
 import pl.edu.pb.blinklink.model.GroupLink;
 import pl.edu.pb.blinklink.model.Link;
+import pl.edu.pb.blinklink.model.Rate;
 import pl.edu.pb.blinklink.model.UserLink;
 import pl.edu.pb.blinklink.model.logic.exceptions.PostingLinkException;
 
@@ -65,6 +66,12 @@ public interface LinkLogic {
      */
     public Collection<Link> searchLinks(String username, String groupname,
                                         Date from, Date to, String content);
+    /**
+     * Comment precisely link and rate it.
+     * @param rate
+     * @param targetId
+     */
+    public void rateLink(Rate rate, long targetId) throws RequestProcessException;
     
     /**
      * Calculates MD5 sum for concrete client.
@@ -72,4 +79,8 @@ public interface LinkLogic {
      * @return MD5 sum of all stored links
      */
     public String calculateSum(BlinkUser user);
+    
+    public static class RequestProcessException extends Exception {
+		private static final long serialVersionUID = 1L;
+    }
 }

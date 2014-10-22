@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
@@ -64,6 +65,14 @@ public class GroupLinkDaoHibernate implements GroupLinkDao {
 		params.put("referer", referer);
 		
 		return glf.select(selectGroupLinkThatsGroupOwnQuery, params);
+	}
+
+	private static String selectGroupLinkWithIdQuery = "SELECT grplnk FROM GroupLink grplnk WHERE grplnk.id = :id";
+	@Override
+	public GroupLink findById(long id) throws NoSuchElementException {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("id", id);
+		return glf.select(selectGroupLinkWithIdQuery, params).get(0);
 	}
 
 }

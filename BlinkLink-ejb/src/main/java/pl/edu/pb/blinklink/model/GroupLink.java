@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -34,6 +35,9 @@ public class GroupLink implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     Date created;
 
+    @OneToOne
+    Rating rating = new Rating();
+    
     boolean deleted;
 
     String description;
@@ -98,6 +102,14 @@ public class GroupLink implements Serializable {
         this.author = author;
     }
 
+    public Rating getRating() {
+    	return rating;
+    }
+    
+    public void setRating(Rating rating) {
+    	this.rating = rating;
+    }
+    
     public GroupLink() {}
     
     public GroupLink(BlinkUser author, Link l, String description)

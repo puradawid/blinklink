@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
@@ -13,10 +14,12 @@ import pl.edu.pb.blinklink.model.BlinkGroup;
 import pl.edu.pb.blinklink.model.BlinkUser;
 import pl.edu.pb.blinklink.model.GroupLink;
 import pl.edu.pb.blinklink.model.Link;
+import pl.edu.pb.blinklink.model.Rate;
 import pl.edu.pb.blinklink.model.UserLink;
 import pl.edu.pb.blinklink.model.beans.BlinkGroupDao;
 import pl.edu.pb.blinklink.model.beans.GroupLinkDao;
 import pl.edu.pb.blinklink.model.beans.LinkDao;
+import pl.edu.pb.blinklink.model.beans.RateDao;
 import pl.edu.pb.blinklink.model.beans.UserLinkDao;
 import pl.edu.pb.blinklink.model.logic.LinkLogic;
 import pl.edu.pb.blinklink.model.logic.exceptions.PostingLinkException;
@@ -41,12 +44,10 @@ public class LinkLogicHibernate implements LinkLogic {
     @EJB(beanName="BlinkGroupDaoHibernate")
     BlinkGroupDao bgd;
     
+    @EJB(beanName="RateDaoHibernate")
+    RateDao rateDao;
     
-    
-    public LinkLogicHibernate()
-    {
-        
-    }
+    public LinkLogicHibernate() {}
     
     private Collection<Link> getLink(String referer)
     {
@@ -136,5 +137,26 @@ public class LinkLogicHibernate implements LinkLogic {
     public String calculateSum(BlinkUser user) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+	@Override
+	public void rateLink(Rate rate, long targetId) throws RequestProcessException {
+		//read rate is it okay
+		if(rate.getRate() < 0 || rate.getRate() > 10)
+			throw new RequestProcessException();
+		//load object from targetId
+		GroupLink link = null;
+		try {
+			link = gld.findById(targetId);
+		} catch (NoSuchElementException e) {
+			throw new RequestProcessException();
+		}
+		//check poster have access to targetId object
+		if(!bgd.findGroupsThatUserRegistered(rate.getRater()).contains(link.getGroup()))
+			throw new RequestProcessException();
+		
+		rateDao.create(rate);
+		link.getRating().getRates().add(rate);
+		gld.update(link);
+	}
     
 }

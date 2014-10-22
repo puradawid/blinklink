@@ -3,6 +3,7 @@ package pl.edu.pb.blinklink.model.beans.mock;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 
 import pl.edu.pb.blinklink.model.BlinkGroup;
 import pl.edu.pb.blinklink.model.GroupLink;
@@ -40,5 +41,13 @@ public class GroupLinkDaoMock extends AbstractDaoMock<GroupLink> implements Grou
 			if(link.getLink().getReferer().equals(referer))
 				result.add(link);
 		return result;
+	}
+
+	@Override
+	public GroupLink findById(long id) throws NoSuchElementException{
+		for(GroupLink link : dataStorage)
+			if(link.getId() == id)
+				return link;
+		throw new NoSuchElementException("No link with id = " + Long.toString(id));
 	}
 }

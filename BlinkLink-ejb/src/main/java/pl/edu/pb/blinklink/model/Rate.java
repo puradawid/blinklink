@@ -33,8 +33,14 @@ public class Rate implements Serializable {
     
     //constructors
     
+    public Rate(BlinkUser rater, int rate, String comment) {
+    	this(rater, rate);
+    	this.comment = comment;
+    }
+    
     public Rate(BlinkUser rater, int rate)
     {
+    	this();
         this.rater = rater;
         this.rate = rate;
     }
@@ -43,6 +49,7 @@ public class Rate implements Serializable {
     {
         this.rater = null;
         this.rate = 0;
+        this.time = new Date();
     }
     
     //getters and setters
