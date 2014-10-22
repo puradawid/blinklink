@@ -109,6 +109,8 @@ public class LinkLogicHibernate implements LinkLogic {
         BlinkGroup bg = null;
         try {
             bg = bgd.findByName(group);
+            if(bg == null)
+            	throw new NoSuchElementException();
             link.setGroup(bg);
         } catch (Exception e) //change it!
         {

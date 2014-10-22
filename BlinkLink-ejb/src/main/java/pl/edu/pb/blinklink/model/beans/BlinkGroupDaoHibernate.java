@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
@@ -60,7 +61,9 @@ public class BlinkGroupDaoHibernate implements BlinkGroupDao {
 		Map<String, Object> keys = new HashMap<String,Object>();
 		keys.put("name", groupName);
 		List<BlinkGroup> result = bgf.select(getGroupByNameQuery, keys);
-		return (result.size() == 0 ? result.get(0) : null);
+		if(result.isEmpty())
+			throw new NoSuchElementException();
+		return result.get(0);
 	}
 
 }

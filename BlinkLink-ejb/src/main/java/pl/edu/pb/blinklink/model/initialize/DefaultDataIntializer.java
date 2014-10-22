@@ -41,8 +41,6 @@ public class DefaultDataIntializer {
     @EJB
     LinkFacade lf;
     
-    private static String IS_USER_EXISTS = "SELECT blinkuser FROM BlinkUser blinkuser WHERE blinkuser.email = :username"; 
-    
     @PostConstruct
     public void init()
     {

@@ -5,6 +5,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -17,9 +20,10 @@ public class Rating implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
     
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     List<Rate> rates = new LinkedList<Rate>();
     
     protected double rate;

@@ -3,6 +3,7 @@ package pl.edu.pb.blinklink.model.beans;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -72,7 +73,10 @@ public class GroupLinkDaoHibernate implements GroupLinkDao {
 	public GroupLink findById(long id) throws NoSuchElementException {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("id", id);
-		return glf.select(selectGroupLinkWithIdQuery, params).get(0);
+		List<GroupLink> result = glf.select(selectGroupLinkWithIdQuery, params);
+		if(result.isEmpty())
+			throw new NoSuchElementException();
+		return result.get(0);
 	}
 
 }

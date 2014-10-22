@@ -3,6 +3,7 @@ package pl.edu.pb.blinklink.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,7 +36,7 @@ public class GroupLink implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     Date created;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     Rating rating = new Rating();
     
     boolean deleted;
