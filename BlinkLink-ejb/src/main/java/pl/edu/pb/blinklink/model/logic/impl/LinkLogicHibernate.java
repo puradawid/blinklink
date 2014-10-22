@@ -15,6 +15,7 @@ import pl.edu.pb.blinklink.model.BlinkUser;
 import pl.edu.pb.blinklink.model.GroupLink;
 import pl.edu.pb.blinklink.model.Link;
 import pl.edu.pb.blinklink.model.Rate;
+import pl.edu.pb.blinklink.model.Rating;
 import pl.edu.pb.blinklink.model.UserLink;
 import pl.edu.pb.blinklink.model.beans.BlinkGroupDao;
 import pl.edu.pb.blinklink.model.beans.GroupLinkDao;
@@ -157,6 +158,15 @@ public class LinkLogicHibernate implements LinkLogic {
 		rateDao.create(rate);
 		link.getRating().getRates().add(rate);
 		gld.update(link);
+	}
+
+	@Override
+	public Rating getRating(long targetId) throws RequestProcessException {
+		try {
+			return gld.findById(targetId).getRating();
+		} catch (NoSuchElementException e) {
+			throw new RequestProcessException();
+		}
 	}
     
 }

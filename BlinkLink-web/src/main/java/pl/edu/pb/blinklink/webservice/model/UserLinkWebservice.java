@@ -25,6 +25,8 @@ public class UserLinkWebservice {
     
     private long id;
     
+    private RatingWebservice rating = null;
+    
     public UserLinkWebservice() {}
     
     public UserLinkWebservice(UserLink ul)
@@ -44,6 +46,7 @@ public class UserLinkWebservice {
         this.sender = ul.getGroup().getName();
         this.referer = ul.getLink().getReferer();
         this.id = ul.getId();
+        this.rating = new RatingWebservice(ul.getRating());
     }
     
     @XmlElement(name="category")
@@ -69,6 +72,11 @@ public class UserLinkWebservice {
     @XmlElement(name="sender")
     public String getSender() {
         return sender;
+    }
+    
+    @XmlElement(name="rating")
+    public RatingWebservice getRating() {
+    	return rating;
     }
     
     @XmlElement(name="id")

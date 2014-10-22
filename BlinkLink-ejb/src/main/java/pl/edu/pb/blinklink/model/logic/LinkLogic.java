@@ -9,6 +9,7 @@ import pl.edu.pb.blinklink.model.BlinkUser;
 import pl.edu.pb.blinklink.model.GroupLink;
 import pl.edu.pb.blinklink.model.Link;
 import pl.edu.pb.blinklink.model.Rate;
+import pl.edu.pb.blinklink.model.Rating;
 import pl.edu.pb.blinklink.model.UserLink;
 import pl.edu.pb.blinklink.model.logic.exceptions.PostingLinkException;
 
@@ -72,6 +73,14 @@ public interface LinkLogic {
      * @param targetId
      */
     public void rateLink(Rate rate, long targetId) throws RequestProcessException;
+    
+    /**
+     * Gets rating of particular link.
+     * @param targetId
+     * @return
+     * @throws RequestProcessException
+     */
+    public Rating getRating(long targetId) throws RequestProcessException;
     
     /**
      * Calculates MD5 sum for concrete client.

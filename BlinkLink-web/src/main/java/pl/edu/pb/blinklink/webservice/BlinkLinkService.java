@@ -18,6 +18,7 @@ import pl.edu.pb.blinklink.model.BlinkUser;
 import pl.edu.pb.blinklink.model.GroupLink;
 import pl.edu.pb.blinklink.model.Link;
 import pl.edu.pb.blinklink.model.Rate;
+import pl.edu.pb.blinklink.model.Rating;
 import pl.edu.pb.blinklink.model.UserLink;
 import pl.edu.pb.blinklink.model.beans.BlinkUserDao;
 import pl.edu.pb.blinklink.model.beans.BlinkUserDao.UserNotFoundException;
@@ -26,6 +27,7 @@ import pl.edu.pb.blinklink.model.logic.LinkLogic;
 import pl.edu.pb.blinklink.model.logic.LinkLogic.RequestProcessException;
 import pl.edu.pb.blinklink.model.logic.UserLogic;
 import pl.edu.pb.blinklink.model.logic.exceptions.PostingLinkException;
+import pl.edu.pb.blinklink.webservice.model.RatingWebservice;
 import pl.edu.pb.blinklink.webservice.model.UserLinkWebservice;
 
 @WebService(serviceName = "BlinkLinkService", targetNamespace = "http://webservice.blinklink.pb.edu.pl/")
@@ -118,6 +120,15 @@ public class BlinkLinkService {
 		try {
 			ll.rateLink(rate, linkId);
 		}catch(RequestProcessException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	@WebMethod(operationName="getComments")
+	public RatingWebservice getRating(long linkId) {
+		try {
+			return new RatingWebservice(ll.getRating(linkId));
+		} catch (RequestProcessException e) {
 			throw new RuntimeException(e);
 		}
 	}
