@@ -43,6 +43,8 @@ public class Rating implements Serializable {
     {
         ratesSize = getRates().size();
         double result = 0.0;
+        if(getRates().isEmpty())
+        	return 0;
         for(Rate r: getRates())
             result += r.getRate();
         result /= ratesSize;
