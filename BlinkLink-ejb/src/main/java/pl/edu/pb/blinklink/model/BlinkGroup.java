@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.LinkedList;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,6 +23,8 @@ import javax.persistence.TemporalType;
 @Entity
 public class BlinkGroup implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
@@ -30,14 +33,24 @@ public class BlinkGroup implements Serializable {
 
     protected String description;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     protected Collection<BlinkUser> registered;
 
     @ManyToOne
     protected BlinkUser owner;
 
     @Temporal(TemporalType.TIMESTAMP)
-    protected Date created;
+    protected Date created = new Date();
+    
+    public BlinkGroup() {
+    	this.registered = new LinkedList<BlinkUser>();	
+    }
+    
+    public BlinkGroup(String name, String description, BlinkUser owner) {
+    	this.name = name;
+    	this.description = description;
+    	this.owner = owner;
+    }
 
     //getters and setters
     public Long getId() {
@@ -100,11 +113,6 @@ public class BlinkGroup implements Serializable {
         this.created = created;
     }
 
-    public BlinkGroup()
-    {
-        this.registered = new LinkedList<BlinkUser>();
-    }
-
     @Override
     public int hashCode() {
         int hash = 3;
@@ -133,9 +141,6 @@ public class BlinkGroup implements Serializable {
             return false;
         }
         if ((this.description == null) ? (other.description != null) : !this.description.equals(other.description)) {
-            return false;
-        }
-        if (this.registered != other.registered && (this.registered == null || !this.registered.equals(other.registered))) {
             return false;
         }
         if (this.owner != other.owner && (this.owner == null || !this.owner.equals(other.owner))) {

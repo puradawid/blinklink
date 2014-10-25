@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<title>Project Name</title>
+	<meta name="author" content="The Author"></meta>
+</h:head>
+<!-- Add 50px padding top to the body for the navbar -->
+<h:body style="padding-top: 50px; padding-bottom: 20px;">
+	<b:navBar brand="BlinkLink" brandHref="#" inverse="true" fixed="top">
+		<b:navbarLinks>
+			<b:dropMenu value="Manage" rendered="#{userBean.logged}">
+				<b:navLink value="Register" href="#"></b:navLink>
+				<b:navLink value="Join" href="#"></b:navLink>
+				<b:navLink value="Leave" href="#"></b:navLink>
+				<b:navLink></b:navLink>
+				<b:navLink header="Groups"></b:navLink>
+				<b:navLink value="Join" href="#"></b:navLink>
+				<b:navLink value="Create" href="#"></b:navLink>
+				<b:navLink value="Leave" href="#"></b:navLink>
+			</b:dropMenu>
+			<b:navLink value="Register" rendered="#{not userBean.logged}" href="register.xhtml" />
+		</b:navbarLinks>
+		<h:form styleClass="navbar-form navbar-right"
+			rendered="#{not userBean.logged}">
+			<div class="form-group">
+				<b:inputText placeholder="Email" fieldSize="sm"
+					value="#{userBean.username}" />
+			</div>
+			<div class="form-group">
+				<h:inputSecret class="form-control input-sm" placeholder="Password" value="#{userBean.password}" fieldSize="sm"/>
+			</div>
+#{' '}
+		<b:commandButton action="#{userBean.login()}" value="Sign in"
+				look="success" />
+		</h:form>
+		<h:form styleClass="navbar-form navbar-right"
+			rendered="#{userBean.logged}">
+#{' '}
+		<b:commandButton action="#{userBean.logout()}" value="Logout"
+				look="success" />
+		</h:form>
+	</b:navBar>
+	<b:alert rendered="#{not userBean.logged}" closable="false" severity="warning">
+		User is not logged in. No access available. Please log in or register.
+	</b:alert>
+	<ui:insert name="content">This is default content</ui:insert>
+	<hr />
+	<footer>
+		<p>BlinkLink users group. No rights reserved.</p>
+	</footer>
+</h:body>
+</html>

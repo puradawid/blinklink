@@ -41,6 +41,12 @@ public class BlinkUser implements Serializable {
         setPassword(password);
     }
     
+    public BlinkUser(String email, String password, String surname, String name) {
+    	this(email, password);
+    	this.surname = surname;
+    	this.name = name;
+    }
+    
     //getters and setters 
     public String getName() {
         return name;
@@ -126,9 +132,6 @@ public class BlinkUser implements Serializable {
             return false;
         }
         if (this.lastLogin != other.lastLogin && (this.lastLogin == null || !this.lastLogin.equals(other.lastLogin))) {
-            return false;
-        }
-        if (this.groups != other.groups && (this.groups == null || !this.groups.equals(other.groups))) {
             return false;
         }
         return true;

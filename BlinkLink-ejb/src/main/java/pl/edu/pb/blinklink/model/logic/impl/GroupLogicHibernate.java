@@ -31,14 +31,18 @@ public class GroupLogicHibernate implements GroupLogic {
     
     @Override
     public void signIn(BlinkUser user, BlinkGroup group) throws UserAlreadyRegisteredException {
-        user.getGroups().add(group); //really naive
+        user.getGroups().add(group);
+        group.getRegistered().add(user);
         bud.update(user);
+        bgd.update(group);
     }
 
     @Override
     public void signOff(BlinkUser user, BlinkGroup group) throws UserUnregisteredException {
-        user.getGroups().remove(group); //really naive
+        user.getGroups().remove(group); 
+        group.getRegistered().remove(user);
         bud.update(user);
+        bgd.update(group);
     }
     
     private static Collection<String> convertToStrings(Collection<BlinkGroup> groups)

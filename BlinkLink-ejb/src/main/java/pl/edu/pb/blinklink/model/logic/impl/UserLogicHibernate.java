@@ -22,24 +22,28 @@ import pl.edu.pb.blinklink.model.logic.exceptions.UserNotExistsException;
 @Stateless(name = "UserLogicHibernate")
 @Local(UserLogic.class)
 public class UserLogicHibernate implements UserLogic {
-    
-    @EJB(beanName="BlinkUserDaoHibernate")
-    BlinkUserDao bud;
-    
-    @Override
-    public void registerUser(BlinkUser user) throws UserAlreadyExistException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
-    @Override
-    public void permDelete(BlinkUser user) throws UserNotExistsException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+	@EJB(beanName = "BlinkUserDaoHibernate") BlinkUserDao bud;
 
-    @Override
-    public BlinkUser login(String username, String password) {
-        BlinkUser login = bud.login(username, password);
-        return login;
-    }
-    
+	@Override
+	public void registerUser(BlinkUser user) throws UserAlreadyExistException {
+		try {
+			bud.create(user);
+		} catch (Exception e) // too wide
+		{
+			throw new UserAlreadyExistException();
+		}
+	}
+
+	@Override
+	public void permDelete(BlinkUser user) throws UserNotExistsException {
+		throw new UnsupportedOperationException("Not supported yet."); 
+	}
+
+	@Override
+	public BlinkUser login(String username, String password) {
+		BlinkUser login = bud.login(username, password);
+		return login;
+	}
+
 }

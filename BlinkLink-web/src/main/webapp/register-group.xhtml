@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:body>
+	<ui:composition template="WEB-INF/templates/main_template.xhtml">
+		<ui:define name="content">
+			<b:container rendered="#{userBean.logged}">
+				<h1>Manage groups</h1>
+				<h2>Create and join groups!</h2>
+				<b:panel>
+					<f:facet name="heading">
+						<h:form class="form-inline">
+							<b:inputText value="#{groupManagingBean.name}" placeholder="Name"></b:inputText>
+							<b:inputText value="#{groupManagingBean.description}" placeholder="Description"></b:inputText>
+							<b:commandButton value="Create" action="#{groupManagingBean.createNewGroup()}"></b:commandButton>
+						</h:form>
+					</f:facet>
+					<c:forEach items="#{groupManagingBean.groups}" var="item">
+					<div>
+						<h:form>
+							<h3>#{item.name}</h3>
+							<h4>#{item.description}</h4>
+							<b:buttonGroup>
+								<b:commandButton rendered="#{groupManagingBean.canUserJoinToGroup(item)}" action="#{groupManagingBean.joinGroup(item)}" value="Join"></b:commandButton>
+								<b:commandButton rendered="#{groupManagingBean.canUserDeleteGroup(item)}" action="#{groupManagingBean.removeGroup(item)}" value="Remove"></b:commandButton>
+								<b:commandButton rendered="#{groupManagingBean.canUserLeaveGroup(item)}" action="#{groupManagingBean.leaveGroup(item)}" value="Leave"></b:commandButton>
+							</b:buttonGroup>
+							</h:form>
+					</div>
+					<c:if test="#{not groupManagingBean.isLast(item)}">
+						<hr />
+					</c:if>
+					</c:forEach>
+				</b:panel>
+			</b:container>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
