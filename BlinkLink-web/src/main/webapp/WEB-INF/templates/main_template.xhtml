@@ -39,7 +39,8 @@
 	<b:alert rendered="#{not userBean.logged}" closable="false" severity="warning">
 		User is not logged in. No access available. Please log in or register.
 	</b:alert>
-	<ui:insert name="content">This is default content</ui:insert>
+	<b:alert rendered="#{flash.errorDetails != null}" severity="danger"><strong>Error: </strong>#{flash.errorDetails}</b:alert>
+	<ui:insert name="content"></ui:insert>
 	<hr />
 	<footer>
 		<p>BlinkLink users group. No rights reserved.</p>
