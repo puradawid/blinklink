@@ -12,16 +12,7 @@
 <h:body style="padding-top: 50px; padding-bottom: 20px;">
 	<b:navBar brand="BlinkLink" brandHref="#" inverse="true" fixed="top">
 		<b:navbarLinks>
-			<b:dropMenu value="Manage" rendered="#{userBean.logged}">
-				<b:navLink value="Register" href="#"></b:navLink>
-				<b:navLink value="Join" href="#"></b:navLink>
-				<b:navLink value="Leave" href="#"></b:navLink>
-				<b:navLink></b:navLink>
-				<b:navLink header="Groups"></b:navLink>
-				<b:navLink value="Join" href="#"></b:navLink>
-				<b:navLink value="Create" href="#"></b:navLink>
-				<b:navLink value="Leave" href="#"></b:navLink>
-			</b:dropMenu>
+			<b:navLink value="Manage"  rendered="#{userBean.logged}" href="manage-groups.xhtml"></b:navLink>
 			<b:navLink value="Register" rendered="#{not userBean.logged}" href="register.xhtml" />
 		</b:navbarLinks>
 		<h:form styleClass="navbar-form navbar-right"
