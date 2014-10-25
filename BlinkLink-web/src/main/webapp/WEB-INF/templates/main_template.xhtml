@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:b="http://bootsfaces.net/ui"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 <h:head>
 	<title>BlinkLink</title>
 	<meta name="author" content="The Author"></meta>
@@ -22,7 +23,7 @@
 					value="#{userBean.username}" />
 			</div>
 			<div class="form-group">
-				<h:inputSecret class="form-control input-sm" placeholder="Password" value="#{userBean.password}" fieldSize="sm"/>
+				<h:inputSecret a:placeholder="Password" id="password" class="form-control input-sm" value="#{userBean.password}" fieldSize="sm"/>
 			</div>
 #{' '}
 		<b:commandButton action="#{userBean.login()}" value="Sign in"
